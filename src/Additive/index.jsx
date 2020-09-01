@@ -14,10 +14,10 @@ const Slider = (csound, sliderNum) => {
 
     csound.setControlChannel(sliderChan, amp);
     return (
-        <div className="sliderBox">
+        <div key={sliderChan} className="sliderBox">
+                
             <div className="sliderLabel">{`Harmonic ${sliderNum}`}</div>
             <input
-                key={sliderChan}
                 type="range"
                 min="-60"
                 max="0"
@@ -36,8 +36,11 @@ const Slider = (csound, sliderNum) => {
 };
 
 const orc = `
+sr=48000
+ksmps=128
 0dbfs=1
 ksmps=128
+nchnls=2
 
 instr 1
     ifreq = 200
