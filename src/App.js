@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import CsoundObj from "@kunstmusik/csound";
+import Additive from "./Additive";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [csound, setCsound] = useState(null);
+    useEffect(() => {
+        if (csound == null) {
+            CsoundObj.initialize().then(() => {
+                const cs = new CsoundObj();
+                setCsound(cs);
+            });
+        }
+    }, [csound]);
+
+    return (
+        <div className="App">
+          { csound == null ? 
+            (<header className="App-header">
+                <p>
+                  Loading... 
+                </p>
+            </header>) :
+            <Additive csound={csound}/>
+          } 
+        </div>
+    );
 }
 
 export default App;
