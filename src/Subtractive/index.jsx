@@ -16,7 +16,7 @@ const SourcePanel = ({ csound }) => {
             >
                 <option value="0">Sawtooth (1/n)</option>
                 <option value="10">Square (1/n, odd partials)</option>
-                <option value="12">Triangle (1/n&#x00B2, odd partials)</option>
+                <option value="12">Triangle (1/n&#x00B2;, odd partials)</option>
                 <option value="-1">Impulse</option>
                 <option value="-2">Buzz (equal strength harmonics up to Nyquist)</option>
                 <option value="-3">White Noise</option>
