@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
+import SpectralAnalyzer from "../SpectralAnalyzer";
 import "./index.css";
-
-const dbToAmp = (db) => {
-    return db <= -60 ? 0 : Math.exp((db * Math.log(10)) / 20);
-};
 
 const SourcePanel = ({ csound }) => {
     return (
@@ -107,34 +104,6 @@ const PlayButtons = ({ csound }) => {
     );
 };
 
-const Slider = (csound, sliderNum) => {
-    const [db, setdb] = useState(-60);
-
-    const amp = dbToAmp(db);
-    const sliderChan = `harm${sliderNum}`;
-
-    csound.setControlChannel(sliderChan, amp);
-    return (
-        <div key={sliderChan} className="sliderBox">
-            <div className="sliderLabel">{`Harmonic ${sliderNum}`}</div>
-            <input
-                type="range"
-                min="-60"
-                max="0"
-                value={db}
-                onInput={(evt) => {
-                    const val = evt.target.value;
-                    setdb(val);
-                }}
-                onDoubleClick={(evt) => {
-                    setdb(-60);
-                }}
-            />
-            <div className="sliderValue">{db}</div>
-        </div>
-    );
-};
-
 const orc = `
 sr=48000
 ksmps=128
@@ -177,7 +146,7 @@ instr 2
 endin
 `;
 
-const Additive = ({ csound }) => {
+const Subtractive = ({ csound }) => {
     const [started, setStarted] = useState(false);
 
     const startCsound = () => {
@@ -204,7 +173,8 @@ const Additive = ({ csound }) => {
                         <FilterPanel csound={csound} />
                     </div>
                     <PlayButtons csound={csound} />
-                    <div>
+                    <div style={{height: "180px"}}>
+                        <SpectralAnalyzer csound={csound} />
                     </div>
                 </>
             ) : (
@@ -214,4 +184,4 @@ const Additive = ({ csound }) => {
     );
 };
 
-export default Additive;
+export default Subtractive;
