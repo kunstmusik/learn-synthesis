@@ -104,7 +104,6 @@ const Additive = ({ csound }) => {
             <h2>Additive Synthesis</h2>
             {started ? (
                 <>
-
                     <Buttons csound={csound} />
                     <Sliders csound={csound} />
                     <div>

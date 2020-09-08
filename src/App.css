@@ -41,6 +41,7 @@ a {
   background: #383c44;
   padding: 10px;
   text-align: left;
+  max-width: 1080px;
 }
 
 .content h2 {
@@ -70,4 +71,12 @@ nav ul li a {
 /* Change the link color to #111 (black) on hover */
 nav ul li a:hover {
   background-color: #111;
+}
+
+/* Container for synthesis pages */
+.container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+    color:white;
 }
