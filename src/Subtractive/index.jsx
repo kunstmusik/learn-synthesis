@@ -14,9 +14,13 @@ const SourcePanel = ({ csound }) => {
                     csound.setControlChannel("waveform", evt.target.value);
                 }}
             >
-                <option value="0">Sawtooth</option>
-                <option value="10">Square</option>
-                <option value="12">Triangle</option>
+                <option value="0">Sawtooth (1/n)</option>
+                <option value="10">Square (1/n, odd partials)</option>
+                <option value="12">Triangle (1/n&#x00B2, odd partials)</option>
+                <option value="-1">Impulse</option>
+                <option value="-2">Buzz (equal strength harmonics up to Nyquist)</option>
+                <option value="-3">White Noise</option>
+                <option value="-4">Pink Noise</option>
             </select>
         </div>
     );
@@ -24,8 +28,10 @@ const SourcePanel = ({ csound }) => {
 
 const FilterPanel = ({ csound }) => {
     const [freq, setFreq] = useState(1000);
+    const [Q, setQ] = useState(0.5);
 
     csound.setControlChannel("filterCutoff", freq);
+    csound.setControlChannel("filterQ", Q);
     return (
         <div className="subPanel2">
             <h3>Filter</h3>
@@ -39,14 +45,17 @@ const FilterPanel = ({ csound }) => {
                 }}
             >
                 <option value="0">None</option>
-                <option value="1">Low Pass: 2 pole (-12dB oct)</option>
-                <option value="2">Low Pass: 4 pole (-24dB oct)</option>
+                <option value="1">Low Pass: 2-pole (-12dB oct)</option>
+                <option value="2">High Pass: 2-pole (-12dB oct)</option>
+                <option value="3">Band Pass: 2-pole (-12dB oct)</option>
+                <option value="4">Band Reject (Notch): 2-pole (-12dB oct)</option>
+                <option value="5">Low Pass: 4-pole (-24dB oct)</option>
             </select>
 
             <input
                 type="range"
                 min="20"
-                max="10000"
+                max="20000"
                 value={freq}
                 onInput={(evt) => {
                     const val = evt.target.value;
@@ -57,6 +66,21 @@ const FilterPanel = ({ csound }) => {
                 }}
             />
             <div style={{margin: "auto"}}>{freq} Hz</div>
+
+            <input
+                type="range"
+                min="0.5"
+                max="25"
+                value={Q}
+                onInput={(evt) => {
+                    const val = evt.target.value;
+                    setQ(val);
+                }}
+                onDoubleClick={(evt) => {
+                    setQ(0.5);
+                }}
+            />
+            <div style={{margin: "auto"}}>{Q} Q</div>
         </div>
     );
 };
@@ -110,23 +134,46 @@ ksmps=128
 0dbfs=1
 nchnls=2
 
+gisine ftgen 0, 0, 65536, 10, 1
+
 instr 1
     ifreq = p4 
 
     print ifreq
 
     ;; SOURCE
-    asig = vco2(1, ifreq, chnget:i("waveform"))
+    iwave = chnget:i("waveform")
+
+    if(iwave == -1) then
+        asig = mpulse(1, 1/ifreq)
+    elseif (iwave == -2) then
+        asig = buzz(1, ifreq, (sr / 2) / ifreq, gisine)
+    elseif (iwave == -3) then
+        asig = random:a(-1, 1) 
+    elseif (iwave == -4) then
+        asig = pinker()
+    else 
+        asig = vco2(1, ifreq, iwave)
+    endif
 
 
     ;; FILTER 
     kfiltType = chnget:i("filterType")
     kcutoff = chnget:k("filterCutoff")
     kcutoff = port(kcutoff, 0.1, chnget:i("filterCutoff"))
+
+    kQ = chnget:k("filterQ")
+    kQ = port(kQ, 0.1, chnget:i("filterQ"))
     if (kfiltType == 1)  then
-        asig = zdf_2pole(asig, kcutoff, 0.5)
-    elseif (kfiltType == 2) then
-        asig = zdf_ladder(asig, kcutoff, 0.5)
+        asig = zdf_2pole(asig, kcutoff, kQ)
+    elseif (kfiltType == 2)  then
+        asig = zdf_2pole(asig, kcutoff, kQ, 1)
+    elseif (kfiltType == 3)  then
+        asig = zdf_2pole(asig, kcutoff, kQ, 3)
+    elseif (kfiltType == 4)  then
+        asig = zdf_2pole(asig, kcutoff, kQ, 4)
+    elseif (kfiltType == 5) then
+        asig = zdf_ladder(asig, kcutoff, kQ)
     endif
 
     ;; DECLICK ENVELOPE
