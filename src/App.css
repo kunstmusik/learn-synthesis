@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   background-color: #282c34;
+  color: white;
 }
 
 .App-logo {
@@ -30,4 +31,43 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+a {
+  color: orange;
+}
+
+.content {
+  background: #383c44;
+  padding: 10px;
+  text-align: left;
+}
+
+.content h2 {
+  text-align: center;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+nav ul li {
+  float: left;
+}
+
+nav ul li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+nav ul li a:hover {
+  background-color: #111;
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { range, map, curry } from "ramda";
 import "./index.css";
 
@@ -93,18 +93,11 @@ const Additive = ({ csound }) => {
         setStarted(true);
     };
 
-    useEffect(() => {
-        return () => {
-            csound.reset();
-        }
-    }, [csound]);
-
     return (
         <div className="container">
-            <h2>Additive Synthesis</h2>
+            <h2>Subtractive Synthesis</h2>
             {started ? (
                 <>
-
                     <Buttons csound={csound} />
                     <Sliders csound={csound} />
                     <div>

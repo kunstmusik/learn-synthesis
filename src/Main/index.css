@@ -1,0 +1,41 @@
+/* MAIN */
+.container {
+    padding: 20px;
+    width: 66%;
+    margin: auto;
+    color:white;
+}
+
+/* BUTTONS */
+
+.buttonBox {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 10px;
+}
+
+button {
+  font-size: calc(10px + 2vmin);
+}
+
+/* SLIDER */
+
+.sliderBox {
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sliderLabel {
+    color: white;
+    width: 140px;
+}
+
+.sliderValue {
+    color: white;
+    width: 110px;
+}
+
+input[type="range"] {
+    width: 100%;
+}
