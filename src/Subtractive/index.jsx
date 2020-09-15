@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import SpectralAnalyzer from "../SpectralAnalyzer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import Modal from "react-modal";
 import "./index.css";
 
 const SourcePanel = ({ csound }) => {
@@ -18,7 +21,9 @@ const SourcePanel = ({ csound }) => {
                 <option value="10">Square (1/n, odd partials)</option>
                 <option value="12">Triangle (1/n&#x00B2;, odd partials)</option>
                 <option value="-1">Impulse</option>
-                <option value="-2">Buzz (equal strength harmonics up to Nyquist)</option>
+                <option value="-2">
+                    Buzz (equal strength harmonics up to Nyquist)
+                </option>
                 <option value="-3">White Noise</option>
                 <option value="-4">Pink Noise</option>
             </select>
@@ -48,7 +53,9 @@ const FilterPanel = ({ csound }) => {
                 <option value="1">Low Pass: 2-pole (-12dB oct)</option>
                 <option value="2">High Pass: 2-pole (-12dB oct)</option>
                 <option value="3">Band Pass: 2-pole (-12dB oct)</option>
-                <option value="4">Band Reject (Notch): 2-pole (-12dB oct)</option>
+                <option value="4">
+                    Band Reject (Notch): 2-pole (-12dB oct)
+                </option>
                 <option value="5">Low Pass: 4-pole (-24dB oct)</option>
             </select>
 
@@ -65,7 +72,7 @@ const FilterPanel = ({ csound }) => {
                     setFreq(1000);
                 }}
             />
-            <div style={{margin: "auto"}}>{freq} Hz</div>
+            <div style={{ margin: "auto" }}>{freq} Hz</div>
 
             <input
                 type="range"
@@ -80,7 +87,7 @@ const FilterPanel = ({ csound }) => {
                     setQ(0.5);
                 }}
             />
-            <div style={{margin: "auto"}}>{Q} Q</div>
+            <div style={{ margin: "auto" }}>{Q} Q</div>
         </div>
     );
 };
@@ -115,14 +122,10 @@ const PlayButtons = ({ csound }) => {
                     csound.readScore("i2 0 1");
                 }}
             >
-                Start Note Gen 
+                Start Note Gen
             </button>
-            <button
-                onClick={() =>
-                    csound.setControlChannel("run", 0)
-                }
-            >
-                Stop Note Gen 
+            <button onClick={() => csound.setControlChannel("run", 0)}>
+                Stop Note Gen
             </button>
         </div>
     );
@@ -195,6 +198,7 @@ endin
 
 const Subtractive = ({ csound }) => {
     const [started, setStarted] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
 
     const startCsound = () => {
         csound.setOption("-+msg_color=false");
@@ -210,9 +214,38 @@ const Subtractive = ({ csound }) => {
         };
     }, [csound]);
 
+    let style = {
+        overlay: { background: "#00000055" },
+        content: { background: "#000000", color: "#fff", 
+                    // display: "grid",
+                    // gridTemplateRows: "30 auto 30",
+                    // rowGap: "10px",
+     },
+    };
+
     return (
         <div className="container">
-            <h2>Subtractive Synthesis</h2>
+            <h2>
+                Subtractive Synthesis{" "}
+                <FontAwesomeIcon
+                    onClick={() => setModalOpen(true)}
+                    icon={faInfoCircle}
+                />
+            </h2>
+            <Modal
+                isOpen={modalOpen}
+                contentLabel="Subtractive Synthesis"
+                style={style}
+            >
+                    <h2>Subtractive Synthesis </h2>
+                    <div style={{margin: 10}}><emph>(Content to be added here)</emph></div>
+                    <button
+                        className="closeButton"
+                        onClick={() => setModalOpen(false)}
+                    >
+                        Close
+                    </button>
+            </Modal>
             {started ? (
                 <>
                     <div className="subGrid">
@@ -220,7 +253,7 @@ const Subtractive = ({ csound }) => {
                         <FilterPanel csound={csound} />
                     </div>
                     <PlayButtons csound={csound} />
-                    <div style={{height: "180px"}}>
+                    <div style={{ height: "180px" }}>
                         <SpectralAnalyzer csound={csound} />
                     </div>
                 </>

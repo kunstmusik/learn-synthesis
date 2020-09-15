@@ -80,3 +80,7 @@ nav ul li a:hover {
     margin: auto;
     color:white;
 }
+
+.pageInformation {
+  height:100%;
+}

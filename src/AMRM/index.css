@@ -1,0 +1,36 @@
+/* MAIN */
+.subGrid {
+    display: grid;
+    grid-column-gap: 30px;
+    grid-template-columns: 50% 50%;
+}
+
+.subPanel1 {
+    padding: 20px;
+    background:#d7f1d7;
+    color: black;
+}
+
+.subPanel2 {
+    padding: 20px;
+    color: black;
+    background:#ddeeae;
+}
+
+/* BUTTONS */
+
+.buttonBox {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 10px;
+}
+
+button {
+  font-size: calc(10px + 2vmin);
+}
+
+.hslider {
+    display: grid;
+    grid-template-columns:  auto auto;
+    column-gap: 5px;
+}
