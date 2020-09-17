@@ -10,29 +10,24 @@ gisine ftgen 0, 0, 65536, 10, 1
 
 instr 1
     ifreq = p4 
+    iamp = p5
 
     ;; MODULATOR 
-    imodEnabled = chnget:i("modEnabled")
-    kmodFreq = chnget:k("modFreq")
-    kmodAmp = chnget:k("modAmp")
-    kmodOffset = chnget:k("modOffset")
+    kmod_ratio = chnget:k("modRatio")  ;; ratio of modulator to carrier frequency
 
-    ;; SOURCE (Carrier)
-    iwave = chnget:i("waveform")
+    icarfreq = p4   ;; carrier frequency set to value given by user
+    kmodfreq = icarfreq * kmod_ratio  ;; derived value for modulator frequency
 
-    if(iwave == -1) then
-        asig = oscili(1, ifreq)
-    else 
-        asig = vco2(1, ifreq, iwave)
-    endif
+    kindex = chnget:k("index")   ;; controls amount of energy in sidebands 
 
-
-    if(imodEnabled == 1) then
-      asig *= oscili(kmodAmp, kmodFreq) + kmodOffset
-    endif
+    kmod_amp = kindex * kmodfreq
+              
+    ;; OPERATORS
+    amod = oscili(kmod_amp, kmodfreq)  ;; "Operator 1"
+    acar = oscili(iamp, icarfreq + amod)  ;; "Operator 2" 
 
     ;; DECLICK ENVELOPE
-    asig *= linen:a(ampdbfs(-12), 0.02, p3, 0.02)
+    asig = acar * linsegr:a(0, 0.02, ampdbfs(-12), 0.02, 0)
 
     out(asig, asig)
 endin
@@ -42,7 +37,7 @@ instr 2
     ivals[] = fillarray(0,2,4,5,7,9,11)
     inn = ivals[int(random:i(0,7))]
     if(irun == 1) then
-        schedule(1, 0, 1, cpsmidinn(84 + inn))
+        schedule(1, 0, 1, cpsmidinn(72 + inn), ampdbfs(-12))
         schedule(p1, 1, 0)
     endif
 endin

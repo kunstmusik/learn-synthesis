@@ -1,15 +1,3 @@
-/* BUTTONS */
-
-.buttonBox {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    column-gap: 10px;
-}
-
-button {
-  font-size: calc(10px + 2vmin);
-}
-
 /* SLIDER */
 
 .sliderBox {

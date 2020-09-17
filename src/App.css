@@ -84,3 +84,22 @@ nav ul li a:hover {
 .pageInformation {
   height:100%;
 }
+
+
+/* BUTTONS */
+
+.buttonBox {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 10px;
+}
+
+.buttonBox4 {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    column-gap: 10px;
+}
+
+button {
+  font-size: calc(10px + 2vmin);
+}
