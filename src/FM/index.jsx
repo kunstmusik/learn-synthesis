@@ -211,9 +211,8 @@ const FM = ({ csound }) => {
             {started ? (
                 <>
                     <div className="subGrid">
-                        {/* <ModulatorPanel csound={csound} />
-                        <CarrierPanel csound={csound} /> */}
-                        <em>Work in progress...</em>
+                        <ModulatorPanel csound={csound} />
+                        <CarrierPanel csound={csound} />
                     </div>
                     <PlayButtons csound={csound} />
                     <div style={{ height: "180px" }}>
