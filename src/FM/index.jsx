@@ -5,9 +5,9 @@ import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import Modal from "react-modal";
 import "./index.css";
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import orc from "!!raw-loader!./amrm.orc";
+import orc from "!!raw-loader!./fm.orc";
 
-const SourcePanel = ({ csound }) => {
+const CarrierPanel = ({ csound }) => {
     const [waveForm, setWaveForm] = useState(-1);
 
     csound.setControlChannel("waveform", waveForm);
@@ -152,7 +152,8 @@ const PlayButtons = ({ csound }) => {
     );
 };
 
-const AMRM = ({ csound }) => {
+
+const FM = ({ csound }) => {
     const [started, setStarted] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -184,7 +185,7 @@ const AMRM = ({ csound }) => {
     return (
         <div className="container">
             <h2>
-                Amplitude/Ring Modulation{" "}
+                Frequency Modulation{" "}
                 <FontAwesomeIcon
                     onClick={() => setModalOpen(true)}
                     icon={faInfoCircle}
@@ -192,12 +193,13 @@ const AMRM = ({ csound }) => {
             </h2>
             <Modal
                 isOpen={modalOpen}
-                contentLabel="Amplitude/Ring Modulation"
+                contentLabel="Frequency Modulation"
                 style={style}
             >
-                <h2>Amplitude/Ring Modulation </h2>
+                <h2>Frequency Modulation</h2>
                 <div style={{ margin: 10 }}>
-                    <emph>(Content to be added here)</emph>
+                    <p>Tool for exploring Frequency Modulation.</p>
+                    <p><em>(Content to be added here)</em></p>
                 </div>
                 <button
                     className="closeButton"
@@ -209,8 +211,9 @@ const AMRM = ({ csound }) => {
             {started ? (
                 <>
                     <div className="subGrid">
-                        <ModulatorPanel csound={csound} />
-                        <SourcePanel csound={csound} />
+                        {/* <ModulatorPanel csound={csound} />
+                        <CarrierPanel csound={csound} /> */}
+                        <em>Work in progress...</em>
                     </div>
                     <PlayButtons csound={csound} />
                     <div style={{ height: "180px" }}>
@@ -224,4 +227,4 @@ const AMRM = ({ csound }) => {
     );
 };
 
-export default AMRM;
+export default FM;

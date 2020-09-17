@@ -4,6 +4,7 @@ import CsoundObj from "@kunstmusik/csound";
 import Additive from "./Additive";
 import Subtractive from "./Subtractive";
 import AMRM from "./AMRM";
+import FM from "./FM";
 import Main from "./Main";
 import { Switch, Route } from "react-router";
 import { Link } from "react-router-dom";
@@ -23,6 +24,9 @@ const Navigation = () => {
                 </li>
                 <li>
                     <Link to="/am_rm">AM/RM</Link>
+                </li>
+                <li>
+                    <Link to="/fm">FM</Link>
                 </li>
             </ul>
         </nav>
@@ -57,6 +61,9 @@ function App() {
                     </Route>
                     <Route path="/am_rm">
                         <AMRM csound={csound} />
+                    </Route>
+                    <Route path="/fm">
+                        <FM csound={csound} />
                     </Route>
                     <Route path="/">
                         <Main />
