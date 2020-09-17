@@ -145,7 +145,7 @@ const PlayButtons = ({ csound }) => {
 
 const FM = ({ csound }) => {
     const [started, setStarted] = useState(false);
-    const [modalOpen, setModalOpen] = useState(true);
+    const [modalOpen, setModalOpen] = useState(false);
 
     const startCsound = () => {
         csound.setOption("-+msg_color=false");
