@@ -8,10 +8,6 @@ import "./index.css";
 import orc from "!!raw-loader!./fm.orc";
 
 const InfoPanel = ({ csound }) => {
-    const [waveForm, setWaveForm] = useState(-1);
-
-    csound.setControlChannel("waveform", waveForm);
-
     return (
         <div className="subPanel1">
             <h3>Notes</h3>
@@ -192,7 +188,7 @@ const FM = ({ csound }) => {
             >
                 <h2>Frequency Modulation</h2>
                 <div style={{ margin: 10 }}>
-                    <img src="https://flossmanual.csound.com/resources/images/04-d-fm.png" width="300"></img>
+                    <img src="https://flossmanual.csound.com/resources/images/04-d-fm.png" width="300" alt="Simple FM Diagram"></img>
                     <p><em>Diagram of Simple FM, from the Csound FLOSS manual chapter on <a href="https://flossmanual.csound.com/sound-synthesis/frequency-modulation">FM Synthesis</a></em></p>
                     <p>Simple FM refers to frequency modulation with two operators (i.e., sine-wave oscillators).</p>
                     <p>There are a few parameters we are concerned with in Simple FM:</p>
