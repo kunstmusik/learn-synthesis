@@ -113,7 +113,7 @@ const PlayButtons = ({ csound }) => {
         >
             <button
                 onClick={() =>
-                    csound.evaluateCode("schedule(1.1, 0, -2, cpsmidinn(69), ampdbfs(-12))")
+                    csound.evalCode("schedule(1.1, 0, -2, cpsmidinn(69), ampdbfs(-12))")
                 }
             >
                 A440 On
@@ -121,7 +121,7 @@ const PlayButtons = ({ csound }) => {
 
             <button
                 onClick={() =>
-                    csound.evaluateCode("schedule(-1.1, 0, 2)")
+                    csound.evalCode("schedule(-1.1, 0, 2)")
                 }
             >
                 A440 Off
@@ -151,7 +151,7 @@ const FM = ({ csound }) => {
         csound.setOption("-+msg_color=false");
         csound.compileOrc(orc);
         csound.start();
-        csound.audioContext.resume();
+        csound.getAudioContext().then(ctx => ctx.resume());
         setStarted(true);
     };
 

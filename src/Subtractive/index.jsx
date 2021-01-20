@@ -99,21 +99,21 @@ const PlayButtons = ({ csound }) => {
         <div className="buttonBox" style={{ marginTop: "30px" }}>
             <button
                 onClick={() =>
-                    csound.evaluateCode("schedule(1, 0, 2, cpsmidinn(48))")
+                    csound.evalCode("schedule(1, 0, 2, cpsmidinn(48))")
                 }
             >
                 C3
             </button>
             <button
                 onClick={() =>
-                    csound.evaluateCode("schedule(1, 0, 2, cpsmidinn(60))")
+                    csound.evalCode("schedule(1, 0, 2, cpsmidinn(60))")
                 }
             >
                 C4
             </button>
             <button
                 onClick={() =>
-                    csound.evaluateCode("schedule(1, 0, 2, cpsmidinn(72))")
+                    csound.evalCode("schedule(1, 0, 2, cpsmidinn(72))")
                 }
             >
                 C5
@@ -141,7 +141,8 @@ const Subtractive = ({ csound }) => {
         csound.setOption("-+msg_color=false");
         csound.compileOrc(orc);
         csound.start();
-        csound.audioContext.resume();
+
+        csound.getAudioContext().then(ctx => ctx.resume());
         setStarted(true);
     };
 

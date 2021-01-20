@@ -160,7 +160,7 @@ const AMRM = ({ csound }) => {
         csound.setOption("-+msg_color=false");
         csound.compileOrc(orc);
         csound.start();
-        csound.audioContext.resume();
+        csound.getAudioContext().then(ctx => ctx.resume());
         setStarted(true);
     };
 

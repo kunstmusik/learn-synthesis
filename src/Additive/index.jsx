@@ -56,10 +56,13 @@ const Buttons = ({ csound }) => {
 const Additive = ({ csound }) => {
     const [started, setStarted] = useState(false);
 
-    const startCsound = () => {
+    const startCsound = async () => {
         csound.compileOrc(orc);
         csound.start();
-        csound.audioContext.resume();
+
+        const ctx = await csound.getAudioContext();
+        ctx.resume();
+
         setStarted(true);
     };
 

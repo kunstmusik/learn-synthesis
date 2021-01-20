@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import CsoundObj from "@kunstmusik/csound";
+import { Csound } from "@csound/browser";
 import Additive from "./Additive";
 import Subtractive from "./Subtractive";
 import AMRM from "./AMRM";
@@ -36,11 +36,10 @@ const Navigation = () => {
 function App() {
     const [csound, setCsound] = useState(null);
     useEffect(() => {
-        if (csound == null) {
-            CsoundObj.initialize().then(() => {
-                const cs = new CsoundObj();
+        if(csound == null) {
+            Csound().then(cs => {
                 setCsound(cs);
-            });
+            })
         }
     }, [csound]);
 

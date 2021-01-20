@@ -15,7 +15,7 @@ function resize(canvas) {
     }
 }
 
-const connectVisualizer = (csound, canvasRef) => {
+const connectVisualizer = async (csound, canvasRef) => {
     if (!canvasRef || !canvasRef.current) {
         return null;
     } else {
@@ -29,7 +29,7 @@ const connectVisualizer = (csound, canvasRef) => {
 
         //console.log("Connect Visualizer!");
 
-        const node = csound.getNode();
+        const node = await csound.getNode();
         const context = node.context;
         const scopeNode = context.createAnalyser();
         scopeNode.fftSize = 2048;
@@ -71,8 +71,8 @@ const connectVisualizer = (csound, canvasRef) => {
     }
 };
 
-const disconnectVisualizer = (csound, scopeNode) => {
-    const node = csound.getNode();
+const disconnectVisualizer = async (csound, scopeNode) => {
+    const node = await csound.getNode();
     node.disconnect(scopeNode);
 
     //console.log("Disconnect Visualizer!");
